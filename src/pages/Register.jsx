@@ -30,7 +30,7 @@ function Register() {
     setIsLoading(true);
     
     try {
-      const res = await axios.post('/api/auth/register', formData);
+      const res = await axios.post('https://study-planner-backend-prss.onrender.com/api/auth/register', formData);
       setMessage(res.data.message);
       setIsSuccess(true);
       
