@@ -388,7 +388,7 @@ export default function SmartPlanner() {
     
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post("/api/analyze", {
+      const response = await axios.post("https://study-planner-backend-prss.onrender.com/api/analyze", {
         syllabus: input,
       }, {
         headers: {
@@ -431,7 +431,7 @@ export default function SmartPlanner() {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        "/api/timetable/generate", 
+        "https://study-planner-backend-prss.onrender.com/api/timetable/generate", 
         {
           availableTime: parseInt(availableTime),
           topics
