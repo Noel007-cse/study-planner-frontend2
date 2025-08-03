@@ -68,24 +68,10 @@
   padding: 0;
 }
 
-/* Animation performance optimization */
-* {
-  will-change: transform, opacity;
-}
-
-/* Reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
 body {
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.6;
   color: var(--dark);
-  overflow-x: hidden;
   background-color: #f5f7fa;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -119,73 +105,11 @@ body.dark-mode {
   }
 }
 
-@keyframes cardFlip {
-  0% { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-  50% { box-shadow: 0 8px 20px rgba(0,0,0,0.2); transform: rotateY(90deg) scale(1.05); }
-  100% { box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-@keyframes progressShine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-@keyframes particleMove {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(20px, 20px); }
-}
-
-@keyframes inputFocus {
-  from { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4); }
-  to { box-shadow: 0 0 0 6px rgba(67, 97, 238, 0); }
-}
-
-@keyframes timerPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-}
-
-@keyframes timerPulseActive {
-  0%, 100% { transform: scale(1); text-shadow: 0 0 0 rgba(255,255,255,0); }
-  50% { transform: scale(1.05); text-shadow: 0 0 10px rgba(255,255,255,0.5); }
-}
-
-@keyframes processingSpin {
-  to { background-position: 100% 0; }
-}
-
 /* Layout */
 .app-container {
   display: grid;
   grid-template-rows: auto 1fr;
   min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
-
-.app-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(67, 97, 238, 0.1) 0%, transparent 20%),
-    radial-gradient(circle at 80% 70%, rgba(114, 9, 183, 0.1) 0%, transparent 20%);
-  animation: particleMove 20s infinite alternate;
-  z-index: -1;
 }
 
 .app-header {
@@ -412,7 +336,6 @@ h3 {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-  animation: inputFocus 0.4s ease-out;
 }
 
 .textarea-field {
@@ -445,24 +368,6 @@ h3 {
   background: var(--gradient-primary);
   transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   border-radius: var(--radius-full);
-  position: relative;
-  overflow: hidden;
-}
-
-.progress-fill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
-  animation: progressShine 2s infinite;
 }
 
 .progress-text {
@@ -482,15 +387,6 @@ h3 {
   text-align: center;
   position: relative;
   overflow: hidden;
-  animation: float 6s ease-in-out infinite;
-}
-
-.pomodoro-timer:hover {
-  animation: float 3s ease-in-out infinite;
-}
-
-.pomodoro-timer.active {
-  animation: none;
 }
 
 .timer-display {
@@ -500,11 +396,6 @@ h3 {
   color: var(--dark);
   font-weight: 600;
   letter-spacing: -1px;
-  animation: timerPulse 2s infinite;
-}
-
-.pomodoro-timer.active .timer-display {
-  animation: timerPulseActive 1s infinite;
 }
 
 .dark-mode .timer-display {
@@ -614,16 +505,6 @@ h3 {
   border-radius: var(--radius-md);
   background-color: rgba(0, 0, 0, 0.03);
   transition: all var(--transition-fast);
-  opacity: 0;
-  transform: translateY(10px);
-  animation: slideIn 0.5s ease-out forwards;
-}
-
-@keyframes slideIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .dark-mode .resource-item {
@@ -702,18 +583,14 @@ h3 {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
 }
 
-.flashcard:hover {
-  animation: cardFlip 0.6s ease;
-}
-
 .flashcard.flipped {
-  transform: rotateY(180deg) scale(1.02);
+  transform: rotateY(180deg);
 }
 
 .flashcard-front, .flashcard-back {
@@ -833,7 +710,7 @@ h3 {
   align-items: center;
   gap: var(--spacing-xs);
   justify-content: center;
-  padding: var(--spacing-xs) var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-full);
   background: var(--gradient-accent);
   color: white;
@@ -1026,10 +903,6 @@ h3 {
   box-shadow: var(--shadow-button-hover);
 }
 
-.analyze-btn.processing {
-  animation: pulse 0.5s infinite, processingSpin 2s linear infinite;
-}
-
 .history-btn {
   display: flex;
   align-items: center;
@@ -1076,9 +949,6 @@ h3 {
   background: white;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
-  opacity: 0;
-  transform: translateY(10px);
-  animation: slideIn 0.5s ease-out forwards;
 }
 
 .dark-mode .topic-card {
@@ -1200,26 +1070,18 @@ h3 {
   box-shadow: var(--shadow-button-hover);
 }
 
-.generate-btn.pulse {
-  animation: pulse 2s infinite;
-}
-
 /* Timetable Output - Modern */
 .timetable-section {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
-  width: 100%;
 }
 
 .timetable-output {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
   background-color: white;
+  padding: var(--spacing-md);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
-  padding: var(--spacing-md);
 }
 
 .dark-mode .timetable-output {
@@ -1258,7 +1120,6 @@ h3 {
 
 .timetable-table-container {
   width: 100%;
-  min-width: fit-content;
   overflow-x: auto;
   margin: var(--spacing-md) 0;
   border-radius: var(--radius-md);
@@ -1268,7 +1129,7 @@ h3 {
 .timetable-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: auto;
+  min-width: 600px;
 }
 
 .timetable-table th {
@@ -1277,13 +1138,11 @@ h3 {
   padding: var(--spacing-sm);
   text-align: left;
   font-weight: 500;
-  white-space: nowrap;
 }
 
 .timetable-table td {
   padding: var(--spacing-sm);
   border: 1px solid var(--light-gray);
-  white-space: nowrap;
 }
 
 .dark-mode .timetable-table td {
@@ -1296,6 +1155,11 @@ h3 {
 
 .dark-mode .timetable-table tr:nth-child(even) {
   background-color: rgba(255, 255, 255, 0.05);
+}
+
+.timetable-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* Analysis History */
@@ -1442,25 +1306,6 @@ h3 {
   
   .time-input {
     max-width: 100%;
-  }
-  
-  .timetable-table {
-    display: block;
-    width: 100%;
-  }
-  
-  .timetable-table th,
-  .timetable-table td {
-    white-space: nowrap;
-    min-width: 120px;
-  }
-  
-  .timetable-section {
-    padding: var(--spacing-sm);
-  }
-  
-  .timetable-output {
-    padding: var(--spacing-sm);
   }
   
   h1 {
